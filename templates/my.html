@@ -1,0 +1,19 @@
+<p>{{stuff}}</p>
+<p>{{stuff| safe}}</p>
+<p>{{stuff| striptags}}</p>
+<p>{{str1| title}}</p>
+<!-- accessing a python dictionary -->
+<!-- this will print whole dictionary -->
+{{favourite_books}}
+<!-- using a for loop -->
+<h1>favourite books:</h1>
+{% for book in favourite_books %}
+    {% if book== 77 %}
+    {{book +100}}
+    {% else%}
+    {{book}} <br/>
+    {% endif%}
+{% endfor%}
+<!-- accesing single items using indices -->
+<br/> <br/>
+{{favourite_books.1}}
