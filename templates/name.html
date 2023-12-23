@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{% for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+    
+{%endfor%}
+<!-- sabse pahle agar name exist karta h toh usko print karo varna name accept karo  -->
+{% if name%}
+    
+    <h1>Konichiva! {{name}}</h1>
+    <br/>
+    <img src="{{url_for('static',filename='images/im1.png')}}" width=1200>
+    <!-- line break -->
+    <br/> <br/> 
+    <p id="demo">This is stuff...</p>
+    <script src="{{url_for('static',filename='js/myfile.js')}}"></script>
+
+{%else%}
+ <form method="POST">
+    <!-- crsf tag ko laana jo humne secret key banai thi vo -->
+    {{form.hidden_tag()}}
+    <!-- now jo humne StringField me likha tha na whats your name wo laana -->
+    {{form.name.label(
+        class="form-label"
+    )}}
+    <!-- next line me hum dabba laa rhe h jisme hum naam dalenge -->
+    {{form.name(
+        class="form-control"
+    )}}
+     <!--ab submit button  -->
+    {{form.submit(
+        class="btn btn-dark"
+    )}}
+ </form>
+{%endif%}
+{%endblock%}

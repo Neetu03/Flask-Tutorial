@@ -1,0 +1,101 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{%for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{%endfor%}
+
+<br /> <br /> <br/>
+<h1><b>User Dashboard</b></h1>
+
+<br /><br /><br/>
+<div class="card">
+    <div class="card-header">{{ current_user.name }}</div>
+    <div class="card-body">
+        <h5 class="card-title">Welcome to User Dashboard</h5>
+        <p class="card-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <strong>Name:</strong> {{ current_user.name }} <br/>
+                    <strong>Username:</strong> {{ current_user.username }} <br/>
+                    <strong>Email:</strong> {{ current_user.email }} <br/>
+                    <strong>Favourite Colour:</strong> {{ current_user.favourite_color }} <br/>
+                    <strong>Date Joined:</strong> {{ current_user.date_added }} <br/>
+                    <strong>About:</strong> {{ current_user.about_author }} <br/>
+                    <strong>Profile Pic:</strong> {{ current_user.profile_pic }} <br/>
+                    <a href="{{ url_for('logout') }}" class="btn btn-dark btn-sm">LogOut</a> 
+                    <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-dark btn-sm">Update user details</a>
+                    <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+                <div class="col-4"> <!-- Adjusted the column size to 4 -->
+                    <img src="static/images/defaultpic.jpeg" width="175" align="right">
+                </div>
+            </div>
+        </div>
+        </p>
+    </div>
+</div>
+   <!-- <img src="url_for('static',filename='images/defaultpic.jpeg')"> -->
+    <br/>
+    <div class="card">
+        <div class="card-header">Update Profile</div>
+        <div class="card-body"> 
+            <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded"Larger shadow>
+                <form action="/dashboard" method="POST" enctype="multipart/form-data">
+                   <!-- crsf tag ko laana jo humne secret key banai thi vo -->
+                   {{form.hidden_tag()}}
+                   <!-- now jo humne StringField me likha tha na whats your name wo laana -->
+                   {{form.name.label(
+                       class="form-label"
+                   )}}
+                   <!-- next line me hum dabba laa rhe h jisme hum naam dalenge -->
+                   {{form.name(
+                       class="form-control",value=name_to_update.name
+                   )}}
+                   <br/>
+                   {{form.email.label(
+                       class="form-label"
+                   )}}
+                   {{form.email(
+                       class="form-control",value=name_to_update.email
+                       )}}
+                       <br/>
+                   {{form.username.label(
+                       class="form-label"
+                   )}}
+                   {{form.username(
+                       class="form-control",value=name_to_update.username
+                   )}}
+                       <br/>
+                   {{form.favourite_color.label(
+                       class="form-label"
+                   )}}
+                   {{form.favourite_color(
+                       class="form-control",value=name_to_update.favourite_color
+                   )}}
+                   <br/>
+                   {{form.about_author.label(
+                    class="form-label"
+                    )}}
+                    <textarea name="about_author" class="form-control">{{name_to_update.about_author}}</textarea>
+                    <br/>
+                    {{form.profile_pic.label(
+                        class="form-label"
+                        )}}
+                        {{form.profile_pic(
+                        class="form-control",value=name_to_update.profile_pic
+                        )}}
+                        <br/>
+                    <!-- submit button  -->
+                   {{form.submit(
+                       class="btn btn-dark btn-sm"
+                   )}}
+                  
+                </form>
+               </div>
+{%endblock%}

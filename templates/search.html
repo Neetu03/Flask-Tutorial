@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%block content%}
+    <h1>Here are the search results:</h1>
+    <br/><br/>
+    {%if posts%}
+        {% for post in posts %}
+        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    
+            <center><h2>{{post.title}}</h2>
+                <br/></center>
+            <small>By: {{post.poster.name}}
+                <br/>
+                On : {{post.date_posted}}
+                <br/></small>
+            Slug: {{post.slug}}
+            <br/> <br/>
+            {{post.content|safe}}
+            <br/><br/>
+            <a href="{{url_for('post',id=post.id)}}" class='btn btn-outline-secondary'> View Post </a>
+            {%if current_user.id==post.poster_id%}
+            <a href="{{url_for('edit_post',id=post.id)}}" class='btn btn-outline-secondary'> Edit Post </a>
+            <a href="{{url_for('delete_post',id=post.id)}}" class='btn btn-outline-danger'> Delete Post </a>
+            {%else%}
+        
+            {%endif%}
+        </div>
+        {%endfor%}
+    {%else%}
+        <h5>Sorry no search results matched</h5>
+    {%endif%}
+{%endblock%}

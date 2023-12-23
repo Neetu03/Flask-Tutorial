@@ -1,0 +1,78 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{% for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+{% endfor %}
+
+{% if id == current_user.id %}
+    <h1> <strong>Update User...</strong></h1>
+    <br/>
+    <br/>
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <form action="/update/{{
+        name_to_update.id}}" method="POST">
+        <!-- crsf tag ko laana jo humne secret key banai thi vo -->
+        {{form.hidden_tag()}}
+        <!-- now jo humne StringField me likha tha na whats your name wo laana -->
+        {{form.name.label(
+            class="form-label"
+        )}}
+        <!-- next line me hum dabba laa rhe h jisme hum naam dalenge -->
+        {{form.name(
+            class="form-control",value=name_to_update.name
+        )}}
+        <br/>
+        {{form.email.label(
+            class="form-label"
+        )}}
+        {{form.email(
+            class="form-control",value=name_to_update.email
+            )}}
+            <br/>
+        {{form.username.label(
+            class="form-label"
+        )}}
+        {{form.username(
+            class="form-control",value=name_to_update.username
+        )}}
+            <br/>
+        {{form.favourite_color.label(
+            class="form-label"
+        )}}
+        {{form.favourite_color(
+            class="form-control",value=name_to_update.favourite_color
+        )}}
+        <br/>
+        {{form.about_author.label(
+            class="form-label"
+        )}}
+        {{form.about_author(
+            class="form-control",value=name_to_update.about_author
+        )}}
+        <br/>
+        <!-- submit button  -->
+        {{form.submit(
+            class="btn btn-dark"
+        )}}
+        <a href="{{ url_for('delete',id=id)}}"class="btn btn-danger">Delete</a>
+        
+    </form>
+    </div>
+{% else %}
+{% for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <h2>Access Denied!</h2>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+    
+{%endfor%}
+<h3>Cannot change someone else ID!</h3>
+
+{%endif%}
+{%endblock%}

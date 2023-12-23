@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{% for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+    
+{%endfor%}
+<!-- sabse pahle agar name exist karta h toh usko print karo varna name accept karo  -->
+{% if email%}
+    {%if passed%}
+    <h1>Email: {{email}}</h1>
+    <br/>
+    <h1>Password:{{password}}</h1>
+    <br/>
+    <h2>I found</h2><br/>
+    Name:{{ pw_to_check.name }} <br/>
+    Email:{{ pw_to_check.email }}<br/>
+    Password:{{ pw_to_check.password_hash}}<br/>
+    {% else %}
+    <h1>Incorrect Password</h1>
+    {%endif%}
+
+    
+{% else %}
+ <h1>Whats you email and password?</h1>
+ <br/>
+ <form method="POST">
+    <!-- crsf tag ko laana jo humne secret key banai thi vo -->
+    {{form.hidden_tag()}}
+    <!-- now jo humne StringField me likha tha na whats your name wo laana -->
+    {{form.email.label(
+        class="form-label"
+    )}}
+    <!-- next line me hum dabba laa rhe h jisme hum naam dalenge -->
+    {{form.email(
+        class="form-control"
+    )}}
+    {{form.password_hash.label(
+        class="form-label"
+    )}}
+    {{form.password_hash(
+        class="form-control"
+    )}}
+     <!--ab submit button  -->
+    {{form.submit(
+        class="btn btn-dark"
+    )}}
+ </form>
+{%endif%}
+{%endblock%}
